@@ -4,10 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="js.js" ></script>
+  <link rel="stylesheet" href="css.css">
+  <script src="js.js"defer ></script>
 </head>
 <body>
   <h1>play rock paper scissor</h1>
-  <button onclick="playGame()">start game</button>
+  <div id="container">
+    <div class="display">choose Rock,Paper,Scissor</div>
+      <button class="button" id="rock"><img src="https://cdn-icons-png.flaticon.com/128/3562/3562093.png" alt="ROCK"></button>
+      <button class="button" id="paper"><img src="https://cdn-icons-png.flaticon.com/128/12355/12355903.png" alt="PAPER"></button>
+      <button class="button" id="scissor"><img src="https://cdn-icons-png.flaticon.com/128/9534/9534501.png" alt="SCISSOR"></button>
+<div id="result"></div>
+<div id="score"></div>
+<div class="resetcenter">
+  <button id="reset" style="display:none;">play again</button> 
+</div>
+
+</div>
 </body>
 </html>

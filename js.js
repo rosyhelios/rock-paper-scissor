@@ -1,49 +1,65 @@
-console.log('hello world');
-let Humanscore=0;
-let ComputerScore=0;
-const choices=['rock','paper','scissor'];
-function getComputerChoice()
+const rockb=document.getElementById('rock');
+const paperb=document.getElementById('paper');
+const scissorb=document.getElementById('scissor');
+const resultdiv=document.getElementById('result');
+const scorediv=document.getElementById('score');
+const resetb=document.getElementById('reset');
+
+let playerScore=0;
+let computerScore=0;
+
+function getComputerChoice(){
+  const choices=['rock','paper','scissor'];
+  return choices[Math.floor(Math.random()*choices.length)];
+}
+
+function determineWinner(playerSelect,computerSelect)
 {
- 
-const randomIndex=Math.floor(Math.random()*choices.length);
-return choices[randomIndex]
+  if(playerSelect===computerSelect){
+    return 'tie';
+  }else if(playerSelect==='rock'&&computerSelect==='scissor'||playerSelect==='paper'&&computerSelect==='rock'||playerSelect==='scissor'&&computerSelect==='paper'){
+    return 'player wins!';
+  }else{
+    return 'computer wins!'; 
+  }
 }
-function playGame(){
-  let continuepl =true;
-  while(continuepl)
-  {
-    const humanChoice=prompt("enter your choice:");
-    const computerChoice=getComputerChoice();
-    if(humanChoice==='q'||humanChoice==='quit'){
-        continuepl=false;
-        console.log(`thanks for playing ! 
-          final score-    human:${Humanscore}
-                          computer:${ComputerScore}`);
-          return;
-    }
-    playRound(humanChoice,computerChoice);
+
+function playRound(playerSelect){
+  const computerSelect=getComputerChoice();
+  const winner=determineWinner(playerSelect,computerSelect);
+  resultdiv.textContent=`Player chose ${playerSelect} , computer chose ${computerSelect}`;
+  if(winner==='player wins!'){
+    playerScore++;
+  }else if(winner==='computer wins!'){
+    computerScore++;
   }
-  
+  scorediv.textContent=`score: player:-${playerScore}
+                               computer:-${computerScore}`;
+  if(playerScore===5||computerScore===5){
+    declarewinner();
+  }                              
 }
-function playRound(humanChoice,computerChoice)
-{
-  humanChoice=humanChoice.toLowerCase();
-  
-  if(!choices.includes(humanChoice)||!choices.includes(computerChoice))
-  {
-    console.log("invalid choice please try agian");
-    return;
-  }
-  if(humanChoice===computerChoice)
-    console.log("it is a tie both lose");
-  else if(humanChoice==='rock'&&computerChoice==='scissor'||humanChoice==='scissor'&&computerChoice==='paper'||humanChoice==="paper"&&computerChoice==="rock")  
-  {
-    console.log(`you win ${humanChoice.charAt(0).toUpperCase()+humanChoice.slice(1)} beats ${computerChoice}`);
-    Humanscore++;
-  }
-  else{
-    console.log(`you lose ${humanChoice.charAt(0).toUpperCase()+humanChoice.slice(1)} loses ${computerChoice}`);
-    ComputerScore++;
-  }
-  console.log(`scores-human:${Humanscore},computer${ComputerScore}`);
+function resetnow(){
+  playerScore= 0;
+  computerScore=0;
+  resultdiv.textContent=' ';
+  scorediv.textContent=' ';
+  resetb.style.display='none';
+
 }
+function declarewinner(){
+  if(playerScore===5){
+    alert("player won");
+    resultdiv.textContent='player wins the game'
+  }
+  else {
+    alert("player lost");
+    resultdiv.textContent="computer wins the game";
+  }
+  resetb.style.display='block';
+}
+
+rockb.addEventListener('click',()=>playRound('rock'));
+paperb.addEventListener('click',()=>playRound('paper'));
+scissorb.addEventListener('click',()=>playRound('scissor'));
+resetb.addEventListener('click',resetnow);
